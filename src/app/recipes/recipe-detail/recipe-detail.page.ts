@@ -66,8 +66,8 @@ export class RecipeDetailPage implements OnInit, OnDestroy {
 
   //onBookPlace
   editableRecipe() {
-    // this.router.navigateByUrl('/places/tabs/discover');
-    // this.navCtrl.navigateBack('/places/tabs/discover');
+    // this.router.navigateByUrl('/recipes/tabs/recipes-list');
+    // this.navCtrl.navigateBack('/recipes/tabs/recipes-list');
     // this.navCtrl.pop();
 
     // this.actionSheetCtrl

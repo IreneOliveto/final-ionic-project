@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MyRecipesPageRoutingModule } from './my-recipes-routing.module';
 
 import { MyRecipesPage } from './my-recipes.page';
+import { RecipeItemComponent } from './recipe-item/recipe-item.component';
 
 @NgModule({
   imports: [
@@ -15,6 +16,6 @@ import { MyRecipesPage } from './my-recipes.page';
     IonicModule,
     MyRecipesPageRoutingModule
   ],
-  declarations: [MyRecipesPage]
+  declarations: [MyRecipesPage, RecipeItemComponent]
 })
 export class MyRecipesPageModule {}

@@ -29,7 +29,7 @@ const routes: Routes = [
             loadChildren: () => import('./my-recipes/my-recipes.module').then(m => m.MyRecipesPageModule)
           },
           {
-            path: 'new',
+            path: 'create',
             loadChildren: () => import('./my-recipes/new-recipe/new-recipe.module').then(m => m.NewRecipePageModule)
           },
           {
