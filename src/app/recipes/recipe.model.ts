@@ -1,10 +1,10 @@
 export class Recipe {
 
   constructor(
-    private _id: string,
-    private _name: string,
-    private _edit: boolean,
-    private _image: string,
+    public id: string,
+    public name: string,
+    public edit: boolean,
+    public image: string,
     // private _calories: number,
     // private _fat: number,
     // private _satfat: number,
@@ -12,8 +12,8 @@ export class Recipe {
     // private _fiber: number,
     // private _sugar: number,
     // private _protein: number,
-    private _instructions: string,
-    private _ingredients: string[],
+    public instructions: string,
+    public ingredients: string[],
     // private _tags: string[]
   ) { }
 
@@ -24,18 +24,18 @@ export class Recipe {
   // public set tags(value: string[]) {
   //   this._tags = value;
   // }
-  public get ingredients(): string[] {
-    return this._ingredients;
-  }
-  public set ingredients(value: string[]) {
-    this._ingredients = value;
-  }
-  public get instructions(): string {
-    return this._instructions;
-  }
-  public set instructions(value: string) {
-    this._instructions = value;
-  }
+  // public get ingredients(): string[] {
+  //   return this._ingredients;
+  // }
+  // public set ingredients(value: string[]) {
+  //   this._ingredients = value;
+  // }
+  // public get instructions(): string {
+  //   return this._instructions;
+  // }
+  // public set instructions(value: string) {
+  //   this._instructions = value;
+  // }
   // public get protein(): number {
   //   return this._protein;
   // }
@@ -79,29 +79,29 @@ export class Recipe {
   // public set calories(value: number) {
   //   this._calories = value;
   // }
-  public get image(): string {
-    return this._image;
-  }
-  public set image(value: string) {
-    this._image = value;
-  }
-  public get edit(): boolean {
-    return this._edit;
-  }
-  public set edit(value: boolean) {
-    this._edit = value;
-  }
-  public get name(): string {
-    return this._name;
-  }
-  public set name(value: string) {
-    this._name = value;
-  }
-  public get id(): string {
-    return this._id;
-  }
-  public set id(value: string) {
-    this._id = value;
-  }
+  // public get image(): string {
+  //   return this._image;
+  // }
+  // public set image(value: string) {
+  //   this._image = value;
+  // }
+  // public get edit(): boolean {
+  //   return this._edit;
+  // }
+  // public set edit(value: boolean) {
+  //   this._edit = value;
+  // }
+  // public get name(): string {
+  //   return this._name;
+  // }
+  // public set name(value: string) {
+  //   this._name = value;
+  // }
+  // public get id(): string {
+  //   return this._id;
+  // }
+  // public set id(value: string) {
+  //   this._id = value;
+  // }
 }
 

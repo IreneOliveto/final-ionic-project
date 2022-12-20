@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding">
   <div class="ion-text-center" *ngIf="isLoading">
     <ion-spinner color="primary"></ion-spinner>
   </div>
@@ -27,13 +27,6 @@
       <ion-col size-sm="6" offset-sm="3" class="ion-text-center" padding>
         <h1>Instructions</h1>
         <p>{{ recipe.instructions }}</p>
-      </ion-col>
-    </ion-row>
-    <ion-row *ngIf="isEditable">
-      <ion-col size-sm="6" offset-sm="3" class="ion-text-center">
-        <ion-button color="primary" margin (click)="editableRecipe()"
-          >Edit</ion-button
-        >
       </ion-col>
     </ion-row>
   </ion-grid>

@@ -82,7 +82,6 @@ export class RecipesService {
       );
   }
 
-
   addRecipe(
     name: string,
     image: string,
@@ -101,7 +100,7 @@ export class RecipesService {
     );
     return this.http
       .post<{ name: string }>(
-        'https://recipes-project-a54e2-default-rtdb.firebaseio.com/my-recipes.json',
+        'https://recipes-project-a54e2-default-rtdb.firebaseio.com/recipes.json',
         {
           ...newRecipe,
           id: null
@@ -118,17 +117,15 @@ export class RecipesService {
           this._recipes.next(recipes.concat(newRecipe));
         })
       );
-    // return this.places.pipe(
-    //   take(1),
-    //   delay(1000),
-    //   tap(places => {
-    //     this._places.next(places.concat(newPlace));
-    //   })
-    // );
   }
 
 
-  updateRecipe(recipeId: string, name: string, instructions: string, ingredients: string[]) {
+  updateRecipe(
+    recipeId: string,
+    name: string,
+    instructions: string,
+    ingredients: string[]
+    ) {
     let updatedRecipes: Recipe[];
     return this.recipes.pipe(
       take(1),
@@ -153,7 +150,7 @@ export class RecipesService {
           // oldRecipe.userId
         );
         return this.http.put(
-          `https://recipes-project-a54e2-default-rtdb.firebaseio.com/my-recipes.json/edit/${recipeId}.json`,
+          `https://recipes-project-a54e2-default-rtdb.firebaseio.com/recipes/${recipeId}.json`,
           { ...updatedRecipes[updatedRecipeIndex], id: null }
         );
       }),
@@ -163,9 +160,21 @@ export class RecipesService {
     );
   }
 
-
-
-
+  deleteRecipe(recipeId: string) {
+    return this.http
+      .delete(
+        `https://recipes-project-a54e2-default-rtdb.firebaseio.com/recipes/${recipeId}.json`
+      )
+      .pipe(
+        switchMap(() => {
+          return this.recipes;
+        }),
+        take(1),
+        tap(recipes => {
+          this._recipes.next(recipes.filter(r => r.id !== recipeId));
+        })
+      );
+  }
 
 
 }

@@ -1,9 +1,76 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>new-recipe</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/recipes/tabs/my-recipes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Create your recipe</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onCreateRecipe()" [disabled]="!form.valid">
+        <ion-icon name="checkmark" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <form [formGroup]="form">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label position="floating">Image</ion-label>
+            <ion-input
+              type="url"
+              autocomplete
+              autocorrect
+              formControlName="image"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
 
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label position="floating">Name</ion-label>
+            <ion-input
+              type="text"
+              autocomplete
+              autocorrect
+              formControlName="name"
+            ></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label position="floating">Ingredients</ion-label>
+            <ion-textarea rows="3" formControlName="ingredients"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row
+        *ngIf="
+          !form.get('ingredients').valid && form.get('ingredients').touched
+        "
+      >
+        <ion-col size-sm="6" offset-sm="3">
+          <p>Ingredients must be between 1 and 180 characters.</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-sm="6" offset-sm="3">
+          <ion-item>
+            <ion-label position="floating">Instructions</ion-label>
+            <ion-input type="string" formControlName="instructions"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-item>
+        <ion-checkbox slot="start"></ion-checkbox>
+        <ion-label>Create it!</ion-label>
+      </ion-item>
+    </ion-grid>
+  </form>
 </ion-content>
