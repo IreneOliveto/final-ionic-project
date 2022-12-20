@@ -31,9 +31,9 @@
               color="primary"
               [routerLink]="[
                 '/',
-                'places',
+                'recipes',
                 'tabs',
-                'discover',
+                'recipes-list',
                 relevantRecipes[0].id
               ]"
             >
@@ -50,13 +50,13 @@
           approxItemHeight="70px"
         >
           <ion-item
-            [routerLink]="['/', 'places', 'tabs', 'discover', recipe.id]"
+            [routerLink]="['/', 'recipes', 'tabs', 'recipes-list', recipe.id]"
             detail
             *virtualItem="let recipe"
           >
-            <ion-thumbnail slot="start">
+            <ion-avatar slot="start">
               <ion-img [src]="recipe.image"></ion-img>
-            </ion-thumbnail>
+            </ion-avatar>
             <ion-label>
               <h2>{{ recipe.name }}</h2>
             </ion-label>

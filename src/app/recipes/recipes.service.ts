@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, map, of, switchMap, take, tap } from 'rxjs';
 
 import { Recipe } from './recipe.model'
 
@@ -61,8 +61,111 @@ export class RecipesService {
           this._recipes.next(recipes);
         })
       );
-
   }
+
+  getRecipe(id: string) {
+    return this.http
+      .get<RecipeData>(
+      `https://recipes-project-a54e2-default-rtdb.firebaseio.com/recipes/${id}.json`,
+        )
+      .pipe(
+        map(recipeData => {
+          return new Recipe(
+            id,
+            recipeData.name,
+            recipeData.edit,
+            recipeData.image,
+            recipeData.instructions,
+            recipeData.ingredients
+          );
+        })
+      );
+  }
+
+
+  addRecipe(
+    name: string,
+    image: string,
+    instructions: string,
+    ingredients: string[],
+  ) {
+    let generatedId: string;
+    const newRecipe = new Recipe(
+      Math.random().toString(),
+      name,
+      true,
+      image,
+      instructions,
+      ingredients
+      // this.authService.userId
+    );
+    return this.http
+      .post<{ name: string }>(
+        'https://recipes-project-a54e2-default-rtdb.firebaseio.com/my-recipes.json',
+        {
+          ...newRecipe,
+          id: null
+        }
+      )
+      .pipe(
+        switchMap(resData => {
+          generatedId = resData.name;
+          return this.recipes;
+        }),
+        take(1),
+        tap(recipes => {
+          newRecipe.id = generatedId;
+          this._recipes.next(recipes.concat(newRecipe));
+        })
+      );
+    // return this.places.pipe(
+    //   take(1),
+    //   delay(1000),
+    //   tap(places => {
+    //     this._places.next(places.concat(newPlace));
+    //   })
+    // );
+  }
+
+
+  updateRecipe(recipeId: string, name: string, instructions: string, ingredients: string[]) {
+    let updatedRecipes: Recipe[];
+    return this.recipes.pipe(
+      take(1),
+      switchMap(recipes => {
+        if (!recipes || recipes.length <= 0) {
+          return this.fetchRecipes();
+        } else {
+          return of(recipes);
+        }
+      }),
+      switchMap(recipes => {
+        const updatedRecipeIndex = recipes.findIndex(r => r.id === recipeId);
+        updatedRecipes = [...recipes];
+        const oldRecipe = updatedRecipes[updatedRecipeIndex];
+        updatedRecipes[updatedRecipeIndex] = new Recipe(
+          oldRecipe.id,
+          name,
+          true,
+          oldRecipe.image,
+          instructions,
+          ingredients,
+          // oldRecipe.userId
+        );
+        return this.http.put(
+          `https://recipes-project-a54e2-default-rtdb.firebaseio.com/my-recipes.json/edit/${recipeId}.json`,
+          { ...updatedRecipes[updatedRecipeIndex], id: null }
+        );
+      }),
+      tap(() => {
+        this._recipes.next(updatedRecipes);
+      })
+    );
+  }
+
+
+
+
 
 
 }

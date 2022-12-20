@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MenuController, SegmentChangeEventDetail } from '@ionic/angular';
 import { Subscription } from 'rxjs';
 import { Recipe } from '../recipe.model';
@@ -9,7 +9,7 @@ import { RecipesService } from '../recipes.service';
   templateUrl: './recipes-list.page.html',
   styleUrls: ['./recipes-list.page.scss'],
 })
-export class RecipesListPage implements OnInit {
+export class RecipesListPage implements OnInit, OnDestroy {
   loadedRecipes: Recipe[];
   listedLoadedRecipes: Recipe[];
   relevantRecipes: Recipe[];

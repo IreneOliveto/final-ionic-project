@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/recipes/tabs/recipes-list"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ isLoading ? 'Loading...' : recipe.name }}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-text-center" *ngIf="isLoading">
+    <ion-spinner color="primary"></ion-spinner>
+  </div>
+  <ion-grid class="ion-no-padding" *ngIf="!isLoading">
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3" class="ion-no-padding">
+        <ion-img [src]="recipe.image"></ion-img>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3" class="ion-text-center" padding>
+        <h1>Ingredients</h1>
+        <p>{{ recipe.ingredients }}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size-sm="6" offset-sm="3" class="ion-text-center" padding>
+        <h1>Instructions</h1>
+        <p>{{ recipe.instructions }}</p>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="isEditable">
+      <ion-col size-sm="6" offset-sm="3" class="ion-text-center">
+        <ion-button color="primary" margin (click)="editableRecipe()"
+          >Edit</ion-button
+        >
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

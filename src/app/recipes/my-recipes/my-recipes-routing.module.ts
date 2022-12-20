@@ -9,11 +9,11 @@ const routes: Routes = [
     component: MyRecipesPage
   },
   {
-    path: 'new-recipe',
+    path: 'create',
     loadChildren: () => import('./new-recipe/new-recipe.module').then( m => m.NewRecipePageModule)
   },
   {
-    path: 'edit-recipe',
+    path: 'edit/:recipeId',
     loadChildren: () => import('./edit-recipe/edit-recipe.module').then( m => m.EditRecipePageModule)
   }
 ];
