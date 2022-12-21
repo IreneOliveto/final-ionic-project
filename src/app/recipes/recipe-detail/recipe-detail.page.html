@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/recipes/tabs/recipes-list"></ion-back-button>
     </ion-buttons>
@@ -20,7 +20,12 @@
     <ion-row>
       <ion-col size-sm="6" offset-sm="3" class="ion-text-center" padding>
         <h1>Ingredients</h1>
-        <p>{{ recipe.ingredients }}</p>
+        <!-- <p>{{ recipe.ingredients }}</p> -->
+        <ion-list>
+          <ion-item *ngFor="let ingredient of recipe.ingredients">
+            <ion-label>{{ ingredient }}</ion-label>
+          </ion-item>
+        </ion-list>
       </ion-col>
     </ion-row>
     <ion-row>

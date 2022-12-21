@@ -19,13 +19,7 @@ export class RecipeDetailPage implements OnInit, OnDestroy {
   constructor(
     private navCtrl: NavController,
     private route: ActivatedRoute,
-    private recipesService: RecipesService,
-    private modalCtrl: ModalController,
-    private actionSheetCtrl: ActionSheetController,
-    // private bookingService: BookingService,
-    private loadingCtrl: LoadingController,
-    // private authService: AuthService,
-    private alertCtrl: AlertController,
+    private recipesService: RecipesService,    private alertCtrl: AlertController,
     private router: Router
   ) {}
 
@@ -41,7 +35,6 @@ export class RecipeDetailPage implements OnInit, OnDestroy {
         .subscribe(
           recipe => {
             this.recipe = recipe;
-            // this.isEditable = recipe.userId !== this.authService.userId;
             this.isLoading = false;
           },
           error => {
@@ -62,76 +55,6 @@ export class RecipeDetailPage implements OnInit, OnDestroy {
           }
         );
     });
-  }
-
-  //onBookPlace
-  editableRecipe() {
-    // this.router.navigateByUrl('/recipes/tabs/recipes-list');
-    // this.navCtrl.navigateBack('/recipes/tabs/recipes-list');
-    // this.navCtrl.pop();
-
-    // this.actionSheetCtrl
-    //   .create({
-    //     header: 'Choose an Action',
-    //     buttons: [
-    //       {
-    //         text: 'Select Date',
-    //         handler: () => {
-    //           this.openBookingModal('select');
-    //         }
-    //       },
-    //       {
-    //         text: 'Random Date',
-    //         handler: () => {
-    //           this.openBookingModal('random');
-    //         }
-    //       },
-    //       {
-    //         text: 'Cancel',
-    //         role: 'cancel'
-    //       }
-    //     ]
-    //   })
-    //   .then(actionSheetEl => {
-    //     actionSheetEl.present();
-    //   });
-  }
-
-  openBookingModal(mode: 'select' | 'random') {
-    // console.log(mode);
-    // this.modalCtrl
-    //   .create({
-    //     component: CreateBookingComponent,
-    //     componentProps: { selectedPlace: this.place, selectedMode: mode }
-    //   })
-    //   .then(modalEl => {
-    //     modalEl.present();
-    //     return modalEl.onDidDismiss();
-    //   })
-    //   .then(resultData => {
-    //     if (resultData.role === 'confirm') {
-    //       this.loadingCtrl
-    //         .create({ message: 'Booking place...' })
-    //         .then(loadingEl => {
-    //           loadingEl.present();
-    //           const data = resultData.data.bookingData;
-    //           this.bookingService
-    //             .addBooking(
-    //               this.place.id,
-    //               this.place.title,
-    //               this.place.imageUrl,
-    //               data.firstName,
-    //               data.lastName,
-    //               data.guestNumber,
-    //               data.startDate,
-    //               data.endDate
-    //             )
-    //             .subscribe(() => {
-    //               loadingEl.dismiss();
-    //             });
-    //         });
-    //     }
-    //   });
   }
 
   ngOnDestroy() {
