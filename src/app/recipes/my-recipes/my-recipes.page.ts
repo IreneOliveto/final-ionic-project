@@ -19,8 +19,6 @@ export class MyRecipesPage implements OnInit , OnDestroy {
 
   ngOnInit() {
     this.recipesSub = this.recipesService.recipes.subscribe(recipes => {
-      console.log(recipes)
-
       this.myRecipes = recipes.filter(recipe => recipe.edit === true);
     });
   }
@@ -36,7 +34,6 @@ export class MyRecipesPage implements OnInit , OnDestroy {
   onEdit(myRecipeId: string, slidingItem: IonItemSliding) {
     slidingItem.close();
     this.router.navigate(['/', 'recipes', 'tabs', 'my-recipes', 'edit', myRecipeId]);
-    console.log('Editing item', myRecipeId);
   }
 
   ngOnDestroy() {
