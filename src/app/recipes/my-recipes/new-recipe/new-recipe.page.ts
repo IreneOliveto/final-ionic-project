@@ -53,8 +53,9 @@ export class NewRecipePage implements OnInit {
           .addRecipe(
             this.form.value.name,
             this.form.value.image,
-            this.form.value.ingredients,
-            this.form.value.instructions
+            this.form.value.instructions,
+            this.form.value.ingredients.trim().split('\n')
+
           )
           .subscribe(() => {
             loadingEl.dismiss();

@@ -14,7 +14,7 @@ import { RecipesService } from '../../recipes.service';
 export class EditRecipePage implements OnInit, OnDestroy {
   recipe: Recipe;
   recipeId: string;
-  form: FormGroup;
+  updateForm: FormGroup;
   isLoading = false;
   private recipeSub: Subscription;
 
@@ -40,24 +40,25 @@ export class EditRecipePage implements OnInit, OnDestroy {
         .subscribe(
           recipe => {
             this.recipe = recipe;
-            this.form = new FormGroup({
-              name: new FormControl(null, {
+            this.updateForm = new FormGroup({
+              name: new FormControl(recipe.name, {
                 updateOn: 'blur',
                 validators: [Validators.required]
               }),
-              image: new FormControl(null, {
+              image: new FormControl(recipe.image, {
                 updateOn: 'blur',
                 validators: [Validators.required]
               }),
-              instructions: new FormControl(null, {
+              instructions: new FormControl(recipe.instructions, {
                 updateOn: 'blur',
                 validators: [Validators.required, Validators.maxLength(180)]
               }),
-              ingredients: new FormControl(null, {
+              ingredients: new FormControl(recipe.ingredients.join('\n'), {
                 updateOn: 'blur',
                 validators: [Validators.required, Validators.min(1)]
               })
             });
+
             this.isLoading = false;
           },
           error => {
@@ -83,7 +84,7 @@ export class EditRecipePage implements OnInit, OnDestroy {
   }
 
   editRecipe() {
-    if (!this.form.valid) {
+    if (!this.updateForm.valid) {
       return;
     }
     this.loadingCtrl
@@ -95,14 +96,14 @@ export class EditRecipePage implements OnInit, OnDestroy {
         this.recipesService
           .updateRecipe(
             this.recipe.id,
-            this.form.value.name,
-            this.form.value.ingredients,
-            this.form.value.instructions
+            this.updateForm.value.name,
+            this.updateForm.value.instructions,
+            this.updateForm.value.ingredients = this.updateForm.value.ingredients.trim().split('\n'),
           )
           .subscribe(() => {
             loadingEl.dismiss();
-            this.form.reset();
-            this.router.navigate(['/recipes/tabs/my-recipes', this.recipeId]);
+            this.updateForm.reset();
+            this.router.navigate(['/recipes/tabs/my-recipes']);
           });
       });
   }
