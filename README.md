@@ -21,8 +21,7 @@ In the bottom of this app the user can toggle between two main pages:
 
   * The **create recipe page** has a form with the recipe informations, in the header of the page there are two buttons: a "check" button, clickable . By submitting the form, the user is redirected to "my recipes" page where the new recipe is added at the end of the list. The form validation checks if all the fields are filled.
 
-  * The **update recipe page** has a form with all the recipes values saved in the database and a submit button. By submitting the form, the recipe will be updated in the database. The form validation checks if all the fields are filled. 
-The user can update or delete a recipe just if this item was created by the user. The user won't be able to modify (delete or update) the rest of the database.
+  * The **update recipe page** has a form with all the recipes values saved in the database and a submit button. By submitting the form, the recipe will be updated in the database. The form validation checks if all the fields are filled.
 
 ## SetUp
 Run `ionic serve` for a dev server.
