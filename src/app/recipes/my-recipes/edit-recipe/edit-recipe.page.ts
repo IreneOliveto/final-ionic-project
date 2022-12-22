@@ -118,21 +118,21 @@ export class EditRecipePage implements OnInit, OnDestroy {
         }, {
           text: 'Delete',
           handler: () => {
-            this.recipesService.deleteRecipe(this.recipe.id);
+            this.loadingCtrl.create({ message: 'Deleting...' })
+          .then(loadingEl => {
+            loadingEl.present();
+            this.recipesService.deleteRecipe(this.recipeId).subscribe(() => {
+              loadingEl.dismiss();
+            });
             this.router.navigate(['/recipes/tabs/my-recipes']);
-          }
+          });
         }
-      ]
+      }
+    ]
     }).then(alertEl => {
       alertEl.present()
     });
-    this.loadingCtrl.create({ message: 'Deleting...' })
-    .then(loadingEl => {
-      loadingEl.present();
-      this.recipesService.deleteRecipe(this.recipeId).subscribe(() => {
-        loadingEl.dismiss();
-      });
-    });
+
   }
 
   ngOnDestroy() {
