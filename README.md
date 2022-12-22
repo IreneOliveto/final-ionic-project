@@ -31,7 +31,7 @@ Run `ionic serve` for a dev server.
 IronHack material and internet research.
 
 ## Presentation
-https://slides.com/ireneoliveto/bold
+https://slides.com/ireneoliveto/bold-0f719e
 
 ## Trello
 https://trello.com/w/ionicproject5/account
