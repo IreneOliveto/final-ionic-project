@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
@@ -24,7 +24,8 @@
           <ion-card-header>
             <ion-card-title>{{ relevantRecipes[0].name }}</ion-card-title>
           </ion-card-header>
-          <ion-img [src]="relevantRecipes[0].image"></ion-img>
+          <ion-img
+          [src]="relevantRecipes[0].image"></ion-img>
           <div>
             <ion-button
               fill="clear"

@@ -5,16 +5,16 @@ export class Recipe {
     public name: string,
     public edit: boolean,
     public image: string,
-    // private _calories: number,
-    // private _fat: number,
-    // private _satfat: number,
-    // private _carbs: number,
-    // private _fiber: number,
-    // private _sugar: number,
-    // private _protein: number,
+    private calories: number,
+    private fat: number,
+    private satfat: number,
+    private carbs: number,
+    private fiber: number,
+    private sugar: number,
+    private protein: number,
     public instructions: string,
     public ingredients: string[],
-    // private _tags: string[]
+    private tags: string[]
   ) { }
 
 

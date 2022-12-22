@@ -9,16 +9,16 @@ interface RecipeData {
   name: string,
   edit: boolean,
   image: string,
-  // calories: number,
-  // fat: number,
-  // satfat: number,
-  // carbs: number,
-  // fiber: number,
-  // sugar: number,
-  // protein: number,
+  calories: number,
+  fat: number,
+  satfat: number,
+  carbs: number,
+  fiber: number,
+  sugar: number,
+  protein: number,
   instructions: string,
   ingredients: string[],
-  // tags: string[]
+  tags: string[]
 }
 
 @Injectable({
@@ -49,8 +49,16 @@ export class RecipesService {
                   resData[key].name,
                   resData[key].edit,
                   resData[key].image,
+                  resData[key].calories,
+                  resData[key].fat,
+                  resData[key].satfat,
+                  resData[key].carbs,
+                  resData[key].fiber,
+                  resData[key].sugar,
+                  resData[key].protein,
                   resData[key].instructions,
-                  resData[key].ingredients
+                  resData[key].ingredients,
+                  resData[key].tags
                 )
               );
             }
@@ -75,8 +83,16 @@ export class RecipesService {
             recipeData.name,
             recipeData.edit,
             recipeData.image,
+            recipeData.calories,
+            recipeData.fat,
+            recipeData.satfat,
+            recipeData.carbs,
+            recipeData.fiber,
+            recipeData.sugar,
+            recipeData.protein,
             recipeData.instructions,
-            recipeData.ingredients
+            recipeData.ingredients,
+            recipeData.tags
           );
         })
       );
@@ -94,8 +110,16 @@ export class RecipesService {
       name,
       true,
       image,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
       instructions,
-      ingredients
+      ingredients,
+      ['']
       // this.authService.userId
     );
     return this.http
@@ -145,8 +169,16 @@ export class RecipesService {
           name,
           true,
           oldRecipe.image,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           instructions,
           ingredients,
+          []
           // oldRecipe.userId
         );
         return this.http.put(
