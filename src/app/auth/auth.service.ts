@@ -1,18 +1,17 @@
-import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Plugins } from '@capacitor/core';
+import { BehaviorSubject, from, map } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   private _userIsAuthenticated = true;
-  private _userId = 'abc';
 
   get userIsAuthenticated() {
     return this._userIsAuthenticated;
-  }
-
-  get userId() {
-    return this._userId;
   }
 
   constructor() {}
