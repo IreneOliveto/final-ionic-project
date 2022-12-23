@@ -38,7 +38,8 @@ export class RecipesService {
   fetchRecipes() {
     return this.http
       .get<{ [key: string]: RecipeData }>(
-        'https://recipes-project-a54e2-default-rtdb.firebaseio.com/recipes.json'
+        `https://recipes-project-a54e2-default-rtdb.firebaseio.com/recipes.json`
+        // ?orderBy="userId"&equalTo="${this.authService.userId}"
       )
       .pipe(
         map(resData => {
@@ -167,6 +168,7 @@ export class RecipesService {
   updateRecipe(
     recipeId: string,
     name: string,
+    image: string,
     instructions: string,
     ingredients: string[]
     ) {
@@ -194,7 +196,7 @@ export class RecipesService {
           oldRecipe.id,
           name,
           true,
-          oldRecipe.image,
+          image,
           0,
           0,
           0,
