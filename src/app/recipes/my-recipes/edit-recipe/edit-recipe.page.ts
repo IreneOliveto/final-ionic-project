@@ -97,6 +97,7 @@ export class EditRecipePage implements OnInit, OnDestroy {
           .updateRecipe(
             this.recipe.id,
             this.updateForm.value.name,
+            this.updateForm.value.image,
             this.updateForm.value.instructions,
             this.updateForm.value.ingredients = this.updateForm.value.ingredients.trim().split('\n'),
           )
@@ -108,7 +109,7 @@ export class EditRecipePage implements OnInit, OnDestroy {
       });
   }
 
-  deleteRecipe() {
+  onDeleteRecipe(recipeId: string) {
     this.alertCtrl.create({
       header:'Are you really sure?',
       message:'Do you really want to delete the recipe?',
@@ -118,18 +119,25 @@ export class EditRecipePage implements OnInit, OnDestroy {
         }, {
           text: 'Delete',
           handler: () => {
-            this.loadingCtrl.create({ message: 'Deleting...' })
-          .then(loadingEl => {
-            loadingEl.present();
-            this.recipesService.deleteRecipe(this.recipeId).subscribe(() => {
-              loadingEl.dismiss();
+            this.loadingCtrl
+            .create({
+              message: 'Deleting...'
+            })
+            .then(loadingEl => {
+              loadingEl.present();
+              this.recipesService
+              .deleteRecipe(this.recipeId)
+              .subscribe(() => {
+                loadingEl.dismiss();
+                this.router.navigate(['/recipes/tabs/my-recipes']);
+              });
             });
-            this.router.navigate(['/recipes/tabs/my-recipes']);
-          });
         }
       }
     ]
-    }).then(alertEl => {
+    })
+
+    .then(alertEl => {
       alertEl.present()
     });
 

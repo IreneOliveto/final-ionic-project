@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, of, switchMap, take, tap } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 
 import { Recipe } from './recipe.model'
 
@@ -18,7 +19,8 @@ interface RecipeData {
   protein: number,
   instructions: string,
   ingredients: string[],
-  tags: string[]
+  tags: string[],
+  userId: string;
 }
 
 @Injectable({
@@ -31,12 +33,13 @@ export class RecipesService {
     return this._recipes.asObservable();
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(private authService: AuthService, private http: HttpClient) {}
 
   fetchRecipes() {
     return this.http
       .get<{ [key: string]: RecipeData }>(
-        'https://recipes-project-a54e2-default-rtdb.firebaseio.com/recipes.json'
+        `https://recipes-project-a54e2-default-rtdb.firebaseio.com/recipes.json`
+        // ?orderBy="userId"&equalTo="${this.authService.userId}"
       )
       .pipe(
         map(resData => {
@@ -58,7 +61,8 @@ export class RecipesService {
                   resData[key].protein,
                   resData[key].instructions,
                   resData[key].ingredients,
-                  resData[key].tags
+                  resData[key].tags,
+                  resData[key].userId
                 )
               );
             }
@@ -92,7 +96,8 @@ export class RecipesService {
             recipeData.protein,
             recipeData.instructions,
             recipeData.ingredients,
-            recipeData.tags
+            recipeData.tags,
+            recipeData.userId
           );
         })
       );
@@ -105,33 +110,49 @@ export class RecipesService {
     ingredients: string[],
   ) {
     let generatedId: string;
-    const newRecipe = new Recipe(
-      Math.random().toString(),
-      name,
-      true,
-      image,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      instructions,
-      ingredients,
-      ['']
-      // this.authService.userId
+    let newRecipe: Recipe;
+    let fetchedUserId: string;
+    return this.authService.userId.pipe(
+      take(1),
+      switchMap(userId => {
+        if (!userId) {
+          throw new Error('No user id found!');
+        }
+        fetchedUserId = userId;
+        return this.authService.token;
+      }),
+      take(1),
+      switchMap(token => {
+        if (!fetchedUserId) {
+          throw new Error('No user found!');
+        }
+        newRecipe = new Recipe(
+        Math.random().toString(),
+        name,
+        true,
+        image,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        instructions,
+        ingredients,
+        [''],
+        fetchedUserId
     );
     return this.http
       .post<{ name: string }>(
-        'https://recipes-project-a54e2-default-rtdb.firebaseio.com/recipes.json',
+        'https://recipes-project-a54e2-default-rtdb.firebaseio.com/recipes.json?auth=${token}',
         {
           ...newRecipe,
           id: null
         }
-      )
-      .pipe(
-        switchMap(resData => {
+      );
+      }),
+      switchMap(resData => {
           generatedId = resData.name;
           return this.recipes;
         }),
@@ -147,11 +168,18 @@ export class RecipesService {
   updateRecipe(
     recipeId: string,
     name: string,
+    image: string,
     instructions: string,
     ingredients: string[]
     ) {
     let updatedRecipes: Recipe[];
-    return this.recipes.pipe(
+    let fetchedToken: string;
+    return this.authService.token.pipe(
+      take(1),
+      switchMap(token => {
+        fetchedToken = token;
+        return this.recipes;
+      }),
       take(1),
       switchMap(recipes => {
         if (!recipes || recipes.length <= 0) {
@@ -168,7 +196,7 @@ export class RecipesService {
           oldRecipe.id,
           name,
           true,
-          oldRecipe.image,
+          image,
           0,
           0,
           0,
@@ -178,11 +206,11 @@ export class RecipesService {
           0,
           instructions,
           ingredients,
-          []
-          // oldRecipe.userId
+          [],
+          oldRecipe.userId
         );
         return this.http.put(
-          `https://recipes-project-a54e2-default-rtdb.firebaseio.com/recipes/${recipeId}.json`,
+          `https://recipes-project-a54e2-default-rtdb.firebaseio.com/recipes/${recipeId}.json?auth=${fetchedToken}`,
           { ...updatedRecipes[updatedRecipeIndex], id: null }
         );
       }),

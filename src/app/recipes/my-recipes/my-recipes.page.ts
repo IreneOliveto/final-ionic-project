@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonItemSliding } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Recipe } from '../recipe.model';
 import { RecipesService } from '../recipes.service';
 
@@ -14,13 +15,22 @@ export class MyRecipesPage implements OnInit , OnDestroy {
   myRecipes: Recipe[];
   isLoading = false;
   private recipesSub: Subscription;
+  userId: string;
 
-  constructor(private recipesService: RecipesService, private router: Router) {}
+  constructor(private recipesService: RecipesService, private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
-    this.recipesSub = this.recipesService.recipes.subscribe(recipes => {
-      this.myRecipes = recipes.filter(recipe => recipe.edit === true);
+    this.authService.userId.subscribe((userId) => {
+      this.userId = userId;
+      console.log(userId);
     });
+
+    this.recipesSub = this.recipesService.recipes.subscribe(recipes => {
+      this.myRecipes = recipes.filter(
+        recipe => recipe.userId === this.userId
+      );
+    });
+
   }
 
   ionViewWillEnter() {

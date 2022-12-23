@@ -14,7 +14,8 @@ export class Recipe {
     private protein: number,
     public instructions: string,
     public ingredients: string[],
-    private tags: string[]
+    private tags: string[],
+    public userId: string
   ) { }
 
 
