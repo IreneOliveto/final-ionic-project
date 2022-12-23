@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MenuController, SegmentChangeEventDetail } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 import { Recipe } from '../recipe.model';
 import { RecipesService } from '../recipes.service';
 
@@ -19,7 +20,7 @@ export class RecipesListPage implements OnInit, OnDestroy {
   constructor(
     private recipesService: RecipesService,
     private menuCtrl: MenuController,
-    // private authService: AuthService
+    private authService: AuthService
   ) {}
 
   ngOnInit() {
