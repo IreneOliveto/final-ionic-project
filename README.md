@@ -28,9 +28,6 @@ Th the update page the user can also delete the recipe clicking the trash button
 ## SetUp
 Run `ionic serve` for a dev server.
 
-## Deploment with netlify
-https://jocular-taiyaki-36d50b.netlify.app/
-
 ## Resources
 IronHack material and internet research.
 
